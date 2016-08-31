@@ -1,4 +1,6 @@
-package com.learn.utils;
+package com.learn.db;
+
+import com.learn.utils.RowMapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.List;
  * @author hwm
  * @since 2016/8/30
  **/
-public class MySqlDb implements Db {
+public class JdbcMySqlDb implements JdbcDb {
 
     public static final String DB_DRIVER = "com.mysql.jdbc.Driver";
 
@@ -20,7 +22,7 @@ public class MySqlDb implements Db {
 
     private String password;
 
-    public MySqlDb(String url, String username, String password) {
+    public JdbcMySqlDb(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;

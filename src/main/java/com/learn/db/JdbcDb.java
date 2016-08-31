@@ -1,4 +1,6 @@
-package com.learn.utils;
+package com.learn.db;
+
+import com.learn.utils.RowMapper;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * @author hwm
  * @since 2016/8/31
  **/
-public interface Db {
+public interface JdbcDb {
 
     /**
      *  查询列表

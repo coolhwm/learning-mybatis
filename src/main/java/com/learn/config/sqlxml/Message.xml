@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message">
+
+    <!-- 映射关系 -->
+    <resultMap type="com.learn.bean.Message" id="MessageResult">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="COMMAND" jdbcType="VARCHAR" property="command"/>
+        <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+
+    <!-- SQL语句 -->
+    <select id="queryMessages" resultMap="MessageResult" parameterType="com.learn.bean.Message">
+        SELECT
+            ID,
+            COMMAND,
+            CONTENT,
+            DESCRIPTION
+        FROM MESSAGE
+        WHERE 1 = 1
+        <if test="command != null and !&quot;&quot;.equals(command)" >
+            AND COMMAND LIKE '%' #{command} '%'
+        </if>
+        <if test="description != null and !&quot;&quot;.equals(description)" >
+            AND DESCRIPTION LIKE '%' #{description} '%'
+        </if>
+    </select>
+
+</mapper>

@@ -2,6 +2,7 @@ package com.learn.service;
 
 import com.learn.bean.Message;
 import com.learn.dao.MessageDao;
+import com.learn.dao.impl.MessageBatisDao;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  **/
 public class ListService {
 
-    private MessageDao messageDao = new MessageDao();
+    private MessageDao messageDao = new MessageBatisDao();
 
     public List<Message> queryMessages(String command, String description){
         return messageDao.queryMessages(command, description);
