@@ -1,7 +1,7 @@
 package com.learn.servlet;
 
 import com.learn.bean.Message;
-import com.learn.service.ListService;
+import com.learn.service.impl.MessageQueryService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +20,7 @@ import java.util.List;
 @WebServlet(name = "ListServlet", urlPatterns = "/list.action")
 public class ListServlet extends HttpServlet {
 
-    private ListService listService = new ListService();
+    private MessageQueryService messageQueryService = new MessageQueryService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,7 +28,7 @@ public class ListServlet extends HttpServlet {
         String command = req.getParameter("command");
         String description = req.getParameter("description");
         //业务处理
-        List<Message> messages = listService.queryMessages(command, description);
+        List<Message> messages = messageQueryService.queryMessages(command, description);
         //返回参数
         req.setAttribute("messageList", messages);
         req.setAttribute("command", command);

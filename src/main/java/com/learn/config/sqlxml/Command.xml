@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Command">
+
+    <!-- 映射关系 -->
+    <resultMap type="com.learn.bean.Command" id="CommandMap">
+        <id column="COMMAND_ID" jdbcType="INTEGER" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <collection property="contents" resultMap="Content.ContentMap"  />
+    </resultMap>
+
+    <!-- 查询 -->
+    <select id="queryCommands" resultMap="CommandMap" parameterType="com.learn.bean.Command">
+        SELECT
+        A.ID AS COMMAND_ID,
+        A.NAME,
+        A.DESCRIPTION,
+        B.ID,
+        B.CONTENT,
+        B.COMMAND_ID
+        FROM COMMAND A LEFT JOIN COMMAND_CONTENT B ON A.ID = B.COMMAND_ID
+        WHERE 1 = 1
+        <if test="name != null and !&quot;&quot;.equals(name)">
+            AND A.NAME LIKE '%' #{name} '%'
+        </if>
+        <if test="description != null and !&quot;&quot;.equals(description)">
+            AND A.DESCRIPTION LIKE '%' #{description} '%'
+        </if>
+    </select>
+
+</mapper>

@@ -34,6 +34,9 @@
 
     <mappers>
         <mapper resource="com/learn/config/sqlxml/Message.xml"/>
+        <mapper resource="com/learn/config/sqlxml/Content.xml"/>
+        <mapper resource="com/learn/config/sqlxml/Command.xml"/>
+
     </mappers>
 
 </configuration>

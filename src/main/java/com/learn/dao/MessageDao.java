@@ -14,5 +14,15 @@ public interface MessageDao {
     /**
      * 查询消息列表
      */
-    public List<Message> queryMessages(String command, String description);
+    List<Message> queryMessages(String command, String description);
+
+    /**
+     * 删除一条消息
+     */
+    void delete(int id);
+
+    /**
+     * 批量删除
+     */
+    void delete(List<Integer> ids);
 }

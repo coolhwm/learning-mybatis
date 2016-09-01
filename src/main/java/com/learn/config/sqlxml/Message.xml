@@ -14,20 +14,38 @@
     </resultMap>
 
     <!-- SQL语句 -->
+
+    <!-- 查询 -->
     <select id="queryMessages" resultMap="MessageResult" parameterType="com.learn.bean.Message">
         SELECT
-            ID,
-            COMMAND,
-            CONTENT,
-            DESCRIPTION
+        ID,
+        COMMAND,
+        CONTENT,
+        DESCRIPTION
         FROM MESSAGE
         WHERE 1 = 1
-        <if test="command != null and !&quot;&quot;.equals(command)" >
+        <if test="command != null and !&quot;&quot;.equals(command)">
             AND COMMAND LIKE '%' #{command} '%'
         </if>
-        <if test="description != null and !&quot;&quot;.equals(description)" >
+        <if test="description != null and !&quot;&quot;.equals(description)">
             AND DESCRIPTION LIKE '%' #{description} '%'
         </if>
     </select>
+
+    <!-- 删除 -->
+    <delete id="deleteOne" parameterType="int">
+        DELETE FROM MESSAGE
+        WHERE ID = #{_parameter}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        DELETE FROM MESSAGE
+        WHERE ID IN (
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </delete>
 
 </mapper>

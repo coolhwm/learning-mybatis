@@ -3,9 +3,7 @@ package com.learn.dao.impl;
 import com.learn.bean.Message;
 import com.learn.dao.MessageDao;
 import com.learn.db.MybatisDb;
-import org.apache.ibatis.session.SqlSession;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,21 +18,19 @@ public class MessageBatisDao implements MessageDao {
 
     @Override
     public List<Message> queryMessages(String command, String description) {
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = db.getSqlSession();
-            Message condition = new Message();
-            condition.setCommand(command);
-            condition.setDescription(description);
+        Message condition = new Message();
+        condition.setCommand(command);
+        condition.setDescription(description);
+        return db.queryForList("Message.queryMessages", condition);
+    }
 
-            return sqlSession.selectList("Message.queryMessages", condition);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
-        }
+    @Override
+    public void delete(int id) {
+        db.delete("Message.deleteOne", id);
+    }
+
+    @Override
+    public void delete(List<Integer> ids) {
+        db.delete("Message.deleteBatch", ids);
     }
 }

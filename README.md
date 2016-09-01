@@ -2,6 +2,7 @@
 ## 0. 学习日记
 - Day1： 使用原生方式构建工程，搭建基础（2016/08/31）；
 - Day2： 学习配置文件，实现查询（2016/09/01）；
+- Day3： 一对多关系配置（2016/09/02）；
 
 ##  1. 配置文件
 
@@ -78,6 +79,7 @@ SqlSession sqlSession = sessionFactory.openSession();
 - `collection` - 集合；
 - `index` - 下标或key值；
 - `item` - 具体的一项；
+- `separator` - 分隔符；
 ```
 <foreach collection="array" index="i" item="item"> 
 <foreach/>
@@ -130,9 +132,51 @@ SqlSession sqlSession = sessionFactory.openSession();
     <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
   </resultMap>
 ```
+## 4. 一对多
+- 在主表的实体类中需要包含子表的`List`；
+- 配置`resultMap`时使用`collection`配置关联的集合映射；
+	- `property` - 集合属性；
+	- `resultMap` - 关联对象的映射器，需要使用命名空间前缀；
+- 配置`select`时使用`join`查询语句；
 
+### 4.1 类配置：
+``` java
+public class Command {
+    private int id;
+    private String description;
+    private String name;
+    private List<Content> contents;
+    .....
+}
+```
 
-## 4. 集成log4j
+### 4.2 XML配置：
+``` xml
+<mapper namespace="Command">
+	<!-- 配置结果映射 -->
+    <resultMap type="com.learn.bean.Command" id="CommandMap">
+        <id column="COMMAND_ID" jdbcType="INTEGER" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <!-- 配置集合映射及使用的resultMap -->
+        <collection property="contents" resultMap="Content.ContentMap"  />
+    </resultMap>
+    
+	<!-- 使用JOIN语句提取数据 -->
+    <select id="queryCommands" resultMap="CommandMap" parameterType="com.learn.bean.Command">
+        SELECT
+        A.ID AS COMMAND_ID,
+        A.NAME,
+        A.DESCRIPTION,
+        B.ID,
+        B.CONTENT,
+        B.COMMAND_ID
+        FROM COMMAND A LEFT JOIN COMMAND_CONTENT B ON A.ID = B.COMMAND_ID
+    </select>
+</mapper>
+```
+
+## 5. 集成log4j
 - 导入`log4j`包；
 - 配置`log4j.properties`配置文件；
 ``` java

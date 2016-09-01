@@ -51,4 +51,14 @@ public class MessageJdbcDao implements MessageDao {
 
         return messages;
     }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void delete(List<Integer> ids) {
+
+    }
 }
