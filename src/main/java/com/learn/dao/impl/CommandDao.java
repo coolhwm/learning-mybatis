@@ -21,4 +21,9 @@ public class CommandDao {
 
         return db.queryForList("Command.queryCommands", command);
     }
+
+    public int add(Command command){
+        db.insert("Command.insert", command);
+        return command.getId();
+    }
 }

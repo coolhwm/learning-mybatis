@@ -46,6 +46,17 @@ public class MybatisDb {
         });
     }
 
+    public <T> void insert(String statement, T object){
+        this.execute(new MybatisCallbackHandler<Void>() {
+            @Override
+            public Void callbackInSqlSession(SqlSession sqlSession) {
+                sqlSession.insert(statement, object);
+                return null;
+            }
+        });
+    }
+
+
     public <T> T execute(MybatisCallbackHandler<T> callbackHandler){
         SqlSession sqlSession = null;
         try {
