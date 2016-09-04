@@ -1,7 +1,7 @@
 package com.learn.service.impl;
 
 import com.learn.dao.MessageDao;
-import com.learn.dao.impl.MessageBatisDao;
+import com.learn.dao.impl.MessageMybatisDao;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -16,12 +16,12 @@ import java.util.List;
  **/
 public class MessageMaintainService {
 
-    private MessageDao messageDao = new MessageBatisDao();
+    private MessageDao messageDao = new MessageMybatisDao();
 
     public void delete(String id) {
         Validate.notEmpty(id, "ID参数不能为空");
         int msgId = NumberUtils.toInt(id);
-        messageDao.delete(msgId);
+        messageDao.deleteOne(msgId);
     }
 
     public void delete(List<String> ids){
@@ -29,6 +29,6 @@ public class MessageMaintainService {
         for (String id : ids) {
             msgIds.add(NumberUtils.toInt(id));
         }
-        messageDao.delete(msgIds);
+        messageDao.deleteBatch(msgIds);
     }
 }

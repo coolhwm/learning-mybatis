@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author hwm
  * @since 2016/9/1
  **/
-@WebServlet(name = "DeleteOneServlet", urlPatterns = "/deleteOne.action")
+@WebServlet(name = "DeleteOneServlet", urlPatterns = "/deleteBatch.action")
 public class DeleteOneServlet extends HttpServlet {
 
     private MessageMaintainService messageMaintainService = new MessageMaintainService();

@@ -15,7 +15,7 @@ import java.util.List;
  * @author hwm
  * @since 2016/8/30
  **/
-public class MessageJdbcDao implements MessageDao {
+public class MessageJDBCDao implements MessageDao {
 
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
@@ -25,10 +25,14 @@ public class MessageJdbcDao implements MessageDao {
 
     /**
      * 查询消息列表
+     * @param message
      */
-    public List<Message> queryMessages(String command, String description){
+    public List<Message> queryMessages(Message message){
 
         String sql = "SELECT ID, COMMAND, CONTENT, DESCRIPTION FROM MESSAGE WHERE 1=1 ";
+
+        String command = message.getCommand();
+        String description = message.getDescription();
 
         List<String> paramList = new ArrayList<>();
         if (StringUtils.isNotEmpty(command)) {
@@ -41,24 +45,24 @@ public class MessageJdbcDao implements MessageDao {
         }
 
         List<Message> messages = db.queryForList(sql, rs -> {
-            Message message = new Message();
-            message.setId(rs.getInt("ID"));
-            message.setCommand(rs.getString("COMMAND"));
-            message.setContent(rs.getString("CONTENT"));
-            message.setDescription(rs.getString("DESCRIPTION"));
-            return message;
+            Message item = new Message();
+            item.setId(rs.getInt("ID"));
+            item.setCommand(rs.getString("COMMAND"));
+            item.setContent(rs.getString("CONTENT"));
+            item.setDescription(rs.getString("DESCRIPTION"));
+            return item;
         }, paramList.toArray());
 
         return messages;
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteOne(int id) {
 
     }
 
     @Override
-    public void delete(List<Integer> ids) {
+    public void deleteBatch(List<Integer> ids) {
 
     }
 }

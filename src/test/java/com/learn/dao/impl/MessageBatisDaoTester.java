@@ -14,11 +14,11 @@ import java.util.List;
  **/
 public class MessageBatisDaoTester {
 
-    private MessageDao messageDao = new MessageBatisDao();
+    private MessageDao messageDao = new MessageMybatisDao();
 
     @Test
     public void testQuery() {
-        List<Message> messages = messageDao.queryMessages("", "");
+        List<Message> messages = messageDao.queryMessages(null);
         System.out.println(messages);
     }
 }

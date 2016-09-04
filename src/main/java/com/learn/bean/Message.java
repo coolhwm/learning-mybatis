@@ -13,6 +13,16 @@ public class Message {
     private String description;
     private String content;
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", command='" + command + '\'' +
+                ", description='" + description + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
     public int getId() {
         return id;
     }

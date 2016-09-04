@@ -16,15 +16,32 @@ import java.util.List;
  * @since 2016/8/31
  **/
 public class MybatisDb {
+
+    public static final String CONFIGURATION_XML = "com/learn/config/Configuration.xml";
+
+    /**
+     * 获取getSqlSession
+     */
     public SqlSession getSqlSession() throws IOException {
         //加载配置文件
-        Reader reader = Resources.getResourceAsReader("com/learn/config/Configuration.xml");
+        Reader reader = Resources.getResourceAsReader(CONFIGURATION_XML);
         //构造SqlSessionFactoryBuilder
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         //构造SqlSessionFactory
         SqlSessionFactory sessionFactory = builder.build(reader);
         //打开session
         return sessionFactory.openSession();
+    }
+
+    /**
+     * 获取接口的实现类
+     */
+    public <T> T getMapper(Class<T> type){
+        try {
+            return getSqlSession().getMapper(type);
+        } catch (IOException e) {
+            throw new RuntimeException("获取Mapper失败", e);
+        }
     }
 
     public <T> List<T> queryForList(String statement, Object parameter){
