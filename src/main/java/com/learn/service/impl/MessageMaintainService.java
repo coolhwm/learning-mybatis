@@ -1,6 +1,5 @@
 package com.learn.service.impl;
 
-import com.learn.dao.MessageDao;
 import com.learn.dao.impl.MessageMybatisDao;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -16,7 +15,7 @@ import java.util.List;
  **/
 public class MessageMaintainService {
 
-    private MessageDao messageDao = new MessageMybatisDao();
+    private MessageMybatisDao messageDao = new MessageMybatisDao();
 
     public void delete(String id) {
         Validate.notEmpty(id, "ID参数不能为空");

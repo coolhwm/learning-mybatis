@@ -1,7 +1,6 @@
 package com.learn.dao.impl;
 
 import com.learn.bean.Message;
-import com.learn.dao.MessageDao;
 import com.learn.db.JdbcDb;
 import com.learn.db.JdbcMySqlDb;
 import org.apache.commons.lang3.StringUtils;
@@ -15,13 +14,14 @@ import java.util.List;
  * @author hwm
  * @since 2016/8/30
  **/
-public class MessageJDBCDao implements MessageDao {
+public class MessageJDBCDao{
 
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
     private static final String DB_URL = "jdbc:mysql://192.168.125.134:3306/micro_message";
 
     private JdbcDb db = new JdbcMySqlDb(DB_URL, DB_USERNAME, DB_PASSWORD);
+
 
     /**
      * 查询消息列表
@@ -56,13 +56,5 @@ public class MessageJDBCDao implements MessageDao {
         return messages;
     }
 
-    @Override
-    public void deleteOne(int id) {
 
-    }
-
-    @Override
-    public void deleteBatch(List<Integer> ids) {
-
-    }
 }

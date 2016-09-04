@@ -3,6 +3,7 @@
 - Day1： 使用原生方式构建工程，搭建基础（2016/08/31）；
 - Day2： 学习配置文件，实现查询（2016/09/01）；
 - Day3： 一对多关系配置（2016/09/02）；
+- Day4： 面向接口编程、拦截器（2016/09/04）；
 
 ##  1. 配置文件
 
@@ -260,7 +261,12 @@ MessageDao messageDao = sqlSession.getMapper(MessageDao.class);
 List<Message> messages = messageDao .queryMessages(message);
 ```
 
-## 6. 集成log4j
+## 6. 拦截器
+- 在不改变源码的情况下，改变`Mybatis`的一些行为；
+- 拦截对象 -> 改变行为 -> 交回主权；
+
+
+## 7. 集成log4j
 - 导入`log4j`包；
 - 配置`log4j.properties`配置文件；
 ``` java

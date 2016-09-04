@@ -27,8 +27,15 @@ public class ListServlet extends HttpServlet {
         //接受参数
         String command = req.getParameter("command");
         String description = req.getParameter("description");
+        String currentPage = req.getParameter("currentPage");
+        String pageNumber = req.getParameter("pageNumber");
+
+        Message query = new Message();
+        query.setCommand(command);
+        query.setDescription(description);
+
         //业务处理
-        List<Message> messages = messageQueryService.queryMessages(command, description);
+        List<Message> messages = messageQueryService.queryMessages(currentPage, pageNumber, query);
         //返回参数
         req.setAttribute("messageList", messages);
         req.setAttribute("command", command);

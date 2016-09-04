@@ -1,7 +1,6 @@
 package com.learn.dao.impl;
 
 import com.learn.bean.Message;
-import com.learn.dao.MessageDao;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  **/
 public class MessageBatisDaoTester {
 
-    private MessageDao messageDao = new MessageMybatisDao();
+    private MessageMybatisDao messageDao = new MessageMybatisDao();
 
     @Test
     public void testQuery() {
