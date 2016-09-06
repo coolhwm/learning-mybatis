@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Content">
+<mapper namespace="com.learn.dao.ContentDao">
 
     <!-- 映射关系 -->
     <resultMap type="com.learn.bean.Content" id="ContentMap">
@@ -12,6 +12,16 @@
         <result column="COMMAND_ID" jdbcType="VARCHAR" property="commandId"/>
     </resultMap>
 
+    <insert id="insertOne" parameterType="com.learn.bean.Content" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO COMMAND_CONTENT(CONTENT, COMMAND_ID) VALUES (#{content}, #{commandId})
+    </insert>
+    
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO COMMAND_CONTENT(CONTENT, COMMAND_ID) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.content}, #{item.commandId})
+        </foreach>
+    </insert>
 
 
 </mapper>
