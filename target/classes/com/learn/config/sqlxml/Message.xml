@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.learn.dao.MessageDao">
+
+    <!-- 映射关系 -->
+    <resultMap type="com.learn.bean.Message" id="MessageResult">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="COMMAND" jdbcType="VARCHAR" property="command"/>
+        <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+    </resultMap>
+
+
+    <!-- SQL语句 -->
+
+    <!-- 查询分页 -->
+    <select id="queryMessagesByPage" resultMap="MessageResult" parameterType="com.learn.utils.Page">
+        SELECT
+        ID,
+        COMMAND,
+        CONTENT,
+        DESCRIPTION
+        FROM MESSAGE
+        <include refid="wherePage"/>
+        ORDER BY ID LIMIT #{dbIndex}, #{dbNumber}
+    </select>
+
+    <!-- 查询分页(拦截器实现) -->
+    <select id="queryMessagesByInterceptor" resultMap="MessageResult" parameterType="com.learn.utils.Page">
+        SELECT
+        ID,
+        COMMAND,
+        CONTENT,
+        DESCRIPTION
+        FROM MESSAGE
+        <include refid="wherePage"/>
+        ORDER BY ID
+    </select>
+
+    <!-- 检索条件 -->
+    <sql id="wherePage">
+        <where>
+            <if test="query.command != null and !&quot;&quot;.equals(query.command)">
+                AND COMMAND LIKE '%' #{query.command} '%'
+            </if>
+            <if test="query.description != null and !&quot;&quot;.equals(query.description)">
+                AND DESCRIPTION LIKE '%' #{query.description} '%'
+            </if>
+        </where>
+    </sql>
+
+
+    <!-- 查询数量 -->
+    <select id="count" resultType="java.lang.Integer"  parameterType="com.learn.bean.Message">
+        SELECT COUNT(*)
+        FROM MESSAGE
+        <include refid="whereQuery"/>
+    </select>
+
+    <!-- 查询消息 -->
+    <select id="queryMessages" resultMap="MessageResult" parameterType="com.learn.bean.Message">
+        SELECT
+        ID,
+        COMMAND,
+        CONTENT,
+        DESCRIPTION
+        FROM MESSAGE
+        <include refid="whereQuery" />
+    </select>
+
+
+
+    <!-- 检索条件 -->
+    <sql id="whereQuery">
+        <where>
+            <if test="command != null and !&quot;&quot;.equals(command)">
+                AND COMMAND LIKE '%' #{command} '%'
+            </if>
+            <if test="description != null and !&quot;&quot;.equals(description)">
+                AND DESCRIPTION LIKE '%' #{description} '%'
+            </if>
+        </where>
+    </sql>
+
+    <!-- 删除 -->
+    <delete id="deleteOne" parameterType="int">
+        DELETE FROM MESSAGE
+        WHERE ID = #{_parameter}
+    </delete>
+
+
+    <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        DELETE FROM MESSAGE
+        WHERE ID IN (
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </delete>
+
+    <!-- 新增 -->
+    <insert id="save" parameterType="com.learn.bean.Message" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO MESSAGE(COMMAND, DESCRIPTION, CONTENT) VALUES (#{command}, #{description}, #{content} )
+
+    </insert>
+</mapper>

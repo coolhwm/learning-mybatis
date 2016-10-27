@@ -3,8 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hwm</groupId>
     <artifactId>learning-mybatis</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>../learning-lucene</module>
+    </modules>
     <name>learning-mybatis</name>
     <url>http://maven.apache.org</url>
 
